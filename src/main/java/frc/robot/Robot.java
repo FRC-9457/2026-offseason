@@ -189,9 +189,14 @@ package frc.robot;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkMaxConfig;
+
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+
+import com.revrobotics.ResetMode;
+import com.revrobotics.PersistMode;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -216,10 +221,18 @@ public class Robot extends TimedRobot {
   }
 
   // Initialize in default mode
-  private Mode currentMode = Mode.JOYSTICK_CONTROL;
+  private Mode currentMode = Mode.FULL_SPEED_CONTROL;
 
   /** Called once at the beginning of the robot program. */
   public Robot() {
+    SparkMaxConfig bottomMotorConfig = new SparkMaxConfig();
+    SparkMaxConfig topMotorConfig = new SparkMaxConfig();
+
+    bottomMotorConfig.inverted(true);
+
+    bottom_motor.configure(bottomMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    top_motor.configure(topMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
   }
 
   /** This function is called periodically during teleoperated mode. */
