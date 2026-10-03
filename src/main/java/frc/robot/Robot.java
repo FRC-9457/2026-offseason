@@ -199,8 +199,8 @@ import edu.wpi.first.wpilibj.XboxController;
  * this project, you must also update the manifest file in the resource directory.
  */
 public class Robot extends TimedRobot {
-  private final SparkMax motor_09 = new SparkMax(9, MotorType.kBrushless);
-  private final SparkMax motor_32 = new SparkMax(32, MotorType.kBrushless);
+  private final SparkMax bottom_motor = new SparkMax(7, MotorType.kBrushless);
+  private final SparkMax top_motor = new SparkMax(5, MotorType.kBrushless);
   private final XboxController m_controller = new XboxController(0);
 
   // Rate limiter: limits speed change to 1.0 unit per second
@@ -239,8 +239,8 @@ public class Robot extends TimedRobot {
         m_continuousRun = false;
         m_limiter.reset(0.0);
 
-        motor_32.set(-m_controller.getLeftY());
-        motor_09.set(-m_controller.getRightY());
+        top_motor.set(-m_controller.getLeftY());
+        bottom_motor.set(-m_controller.getRightY());
         break;
 
       case FULL_SPEED_CONTROL:
@@ -257,8 +257,8 @@ public class Robot extends TimedRobot {
         // Calculate rate-limited speed output
         double rampedSpeed = m_limiter.calculate(targetSpeed);
 
-        motor_32.set(rampedSpeed);
-        motor_09.set(rampedSpeed);
+        top_motor.set(rampedSpeed);
+        bottom_motor.set(rampedSpeed);
         break;
     }
   }
