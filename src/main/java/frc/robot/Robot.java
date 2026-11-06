@@ -188,6 +188,7 @@
 package frc.robot;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkAbsoluteEncoder;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
@@ -197,6 +198,7 @@ import edu.wpi.first.wpilibj.XboxController;
 
 import com.revrobotics.ResetMode;
 import com.revrobotics.PersistMode;
+import com.revrobotics.RelativeEncoder;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -206,6 +208,8 @@ import com.revrobotics.PersistMode;
 public class Robot extends TimedRobot {
   private final SparkMax bottom_motor = new SparkMax(7, MotorType.kBrushless);
   private final SparkMax top_motor = new SparkMax(5, MotorType.kBrushless);
+  private final RelativeEncoder bottom_encoder = bottom_motor.getEncoder();
+  private final RelativeEncoder top_encoder = top_motor.getEncoder();
   private final XboxController m_controller = new XboxController(0);
 
   // Rate limiter: limits speed change to 1.0 unit per second
@@ -274,5 +278,7 @@ public class Robot extends TimedRobot {
         bottom_motor.set(rampedSpeed);
         break;
     }
+
+    System.out.printf("Top %d RPM, Bottom %d RPM\n", (int)top_encoder.getVelocity(), (int)bottom_encoder.getVelocity());
   }
 }
